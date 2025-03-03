@@ -34,6 +34,6 @@ app.post('/chat', async (req, res) => {
 });
 
 // ✅ Ensure server starts properly
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT ||103000;
 app.listen(PORT, () => console.log(`✅ Pierre is live on port ${PORT}!`));
 
