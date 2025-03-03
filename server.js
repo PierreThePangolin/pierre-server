@@ -1,0 +1,26 @@
+const express = require('express');
+const axios = require('axios');
+require('dotenv').config();
+
+const app = express();
+app.use(express.json());
+
+app.post('/chat', async (req, res) => {
+    const userMessage = req.body.message;
+
+    const response = await axios.post(
+        'https://api.openai.com/v1/chat/completions',
+        {
+            model: "gpt-4",
+            messages: [
+                { role: "system", content: "You're Pierre, a streaming recommendation assistant for PangolinRC. Start by recommending White Lotus. If the user says no, suggest Daredevil." },
+                { role: "user", content: userMessage }
+            ],
+        },
+        { headers: { Authorization: `Bearer ${process.env.OPENAI_API_KEY}` } }
+    );
+
+    res.json({ reply: response.data.choices[0].message.content });
+});
+
+app.listen(3000, () => console.log("Pierre is live on port 3000!"));
