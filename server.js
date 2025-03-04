@@ -1,16 +1,14 @@
 const express = require('express');
 const axios = require('axios');
+const cors = require('cors');  
 require('dotenv').config();
-const cors = require('cors');  // ✅ Import CORS
 
-const app = express();
-app.use(cors());  // ✅ Enable CORS for all origins
+const app = express(); // ✅ This should only appear once
+
+app.use(cors());  // ✅ Enable CORS
 app.use(express.json());  // Allows JSON requests
 
-const app = express();
-app.use(express.json()); // Allows JSON requests
-
-// ✅ Chatbot API route
+// Chatbot API route
 app.post('/chat', async (req, res) => {
     const userMessage = req.body.message;
 
@@ -22,9 +20,9 @@ app.post('/chat', async (req, res) => {
         const response = await axios.post(
             'https://api.openai.com/v1/chat/completions',
             {
-                model: "gpt-3.5-turbo",
+                model: "gpt-3.5-turbo",  // ✅ Using GPT-3.5-Turbo
                 messages: [
-                    { role: "system", content: "You're Pierre, a streaming recommendation assistant." },
+                    { role: "system", content: "You're Pierre, a streaming subscription savings assistant." },
                     { role: "user", content: userMessage }
                 ],
             },
@@ -38,7 +36,7 @@ app.post('/chat', async (req, res) => {
     }
 });
 
-// ✅ Ensure server starts properly
-const PORT = process.env.PORT ||10000;
-app.listen(PORT, () => console.log(`✅ Pierre is live on port ${PORT}!`));
+// Start the server
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => console.log(`Pierre is live on port ${PORT}!`));
 
