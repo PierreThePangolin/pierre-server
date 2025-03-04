@@ -1,6 +1,11 @@
 const express = require('express');
 const axios = require('axios');
 require('dotenv').config();
+const cors = require('cors');  // ✅ Import CORS
+
+const app = express();
+app.use(cors());  // ✅ Enable CORS for all origins
+app.use(express.json());  // Allows JSON requests
 
 const app = express();
 app.use(express.json()); // Allows JSON requests
